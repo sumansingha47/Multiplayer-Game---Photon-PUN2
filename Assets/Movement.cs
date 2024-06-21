@@ -54,7 +54,7 @@ public class Movement : MonoBehaviour
             }
             else
             {
-                var velocity1 :Vector3 = rb.velocity;
+                var velocity1 = rb.velocity;
                 velocity1 = new Vector3(velocity1.x * 0.2f * Time.fixedDeltaTime, velocity1.y, velocity1.z * 0.2f * Time.fixedDeltaTime);
                 rb.velocity = velocity1;
             }
