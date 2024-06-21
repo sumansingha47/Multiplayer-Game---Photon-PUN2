@@ -5,10 +5,19 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public float walkSpeed = 4f;
+    public float sprintSpeed = 14f;
     public float maxVelocityChange = 10f;
+
+    [Space]
+    public float jumpHeight = 30f;
 
     private Vector2 input;
     private Rigidbody rb;
+
+    private bool sprinting;
+    private bool jumping;
+
+    private bool grounded = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,18 +29,46 @@ public class Movement : MonoBehaviour
     void Update()
     {
         input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        input.Normalize();            
+        input.Normalize();
+
+        sprinting = Input.GetButton("Sprint");
+        jumping = Input.GetButton("Jump");        
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        grounded = true;
     }
 
     void FixedUpdate()
     {
-        rb.AddForce(CalculateMovement(walkSpeed), ForceMode.VelocityChange);   
+        if(grounded)
+        {
+            if(jumping)
+            {
+                rb.velocity = new Vector3(rb.velocity.x, jumpHeight, rb.velocity.z);
+            } else if(input.magnitude > 0.5f)
+            {
+                rb.AddForce(CalculateMovement(sprinting ? sprintSpeed : walkSpeed), ForceMode.VelocityChange);
+
+            }
+            else
+            {
+                var velocity1 :Vector3 = rb.velocity;
+                velocity1 = new Vector3(velocity1.x * 0.2f * Time.fixedDeltaTime, velocity1.y, velocity1.z * 0.2f * Time.fixedDeltaTime);
+                rb.velocity = velocity1;
+            }
+
+        }
+
+        grounded = false;
     }
 
     Vector3 CalculateMovement(float _speed)
     {
         Vector3 targetVelocity = new Vector3(input.x, 0, input.y);
         targetVelocity = transform.TransformDirection(targetVelocity);
+
         targetVelocity *= _speed;
 
         Vector3 velocity = rb.velocity;
@@ -45,7 +82,7 @@ public class Movement : MonoBehaviour
 
             velocityChange.y = 0;
 
-            return (velocityChange);
+            return velocityChange;
         }
         else
         {
