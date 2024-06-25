@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
     
     public int damage;
 
-    public new Camera camera;
+    public Camera camera;
 
     public float fireRate;
 

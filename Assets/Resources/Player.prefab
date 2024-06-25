@@ -625,6 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  isLocalPlayer: 0
   healthText: {fileID: 750472900335055961}
 --- !u!1001 &3452783756719358234
 PrefabInstance:

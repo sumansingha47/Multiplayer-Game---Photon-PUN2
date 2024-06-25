@@ -6,7 +6,7 @@ public class PlayerSetup : MonoBehaviour
 {
     public Movement movement;
 
-    public new GameObject camera;
+    public GameObject camera;
 
     public void IsLocalPlayer()
     {
