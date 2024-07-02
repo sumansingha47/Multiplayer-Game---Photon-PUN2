@@ -16,6 +16,7 @@ public class Leaderboard : MonoBehaviour
     [Space]
     public TextMeshProUGUI[] scoreText;
     public TextMeshProUGUI[] nameText;
+    public TextMeshProUGUI[] kdText;
 
 
     private void Start()
@@ -44,6 +45,15 @@ public class Leaderboard : MonoBehaviour
 
             nameText[i].text = player.NickName;
             scoreText[i].text = player.GetScore().ToString();
+
+            if (player.CustomProperties["kills"] != null)
+            {
+                kdText[i].text = player.CustomProperties["kills"] + "/" + player.CustomProperties["deaths"];
+            }
+            else
+            {
+                kdText[i].text = "0/0";
+            }
 
             i++;
 
