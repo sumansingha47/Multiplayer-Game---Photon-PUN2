@@ -43,35 +43,13 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         Debug.Log(message: "Connecting...");
 
-        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.JoinOrCreateRoom(roomNameToJoin, null, null);
 
         nameUI.SetActive(false);
         connectingUI.SetActive(true);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    public override void OnConnectedToMaster()
-    {
-        base.OnConnectedToMaster();
-
-        Debug.Log(message: "Connected to Server");
-
-        PhotonNetwork.JoinLobby();
-    }
-
-    public override void OnJoinedLobby()
-    {
-        base.OnJoinedLobby();
-
-        Debug.Log(message: "We're in the room");
-
-        PhotonNetwork.JoinOrCreateRoom(roomName: "Test", roomOptions: null, typedLobby: null);
-    }
 
     public override void OnJoinedRoom()
     {
