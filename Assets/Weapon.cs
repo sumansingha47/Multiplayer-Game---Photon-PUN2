@@ -4,9 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Photon.Pun.UtilityScripts;
+using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
+    public Image ammoCircle;
     
     public int damage;
 
@@ -56,10 +58,17 @@ public class Weapon : MonoBehaviour
     private bool recoiling;
     public bool recovering;
 
+    void SetAmmo()
+    {
+        ammoCircle.fillAmount = (float)ammo / magAmmo;
+    }
+
     void Start()
     {
         magText.text = mag.ToString();
         ammoText.text = ammo + "/" + magAmmo;
+
+        SetAmmo();
 
         originalPosition = transform.localPosition;
 
@@ -83,6 +92,8 @@ public class Weapon : MonoBehaviour
 
             magText.text = mag.ToString();
             ammoText.text = ammo + "/" + magAmmo;
+
+            SetAmmo();
 
             Fire();
         }
@@ -118,6 +129,7 @@ public class Weapon : MonoBehaviour
 
         magText.text = mag.ToString();
         ammoText.text = ammo + "/" + magAmmo;
+        SetAmmo();
     }
 
     void Fire()
